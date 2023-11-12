@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Junit
+Bundle-SymbolicName: org.eclipse.contribution.junit
+Bundle-Version: 1.0.0
+Automatic-Module-Name: org.eclipse.contribution.junit
+Bundle-RequiredExecutionEnvironment: JavaSE-17

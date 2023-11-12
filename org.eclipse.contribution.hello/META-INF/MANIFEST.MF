@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Hello World
+Bundle-SymbolicName: org.eclipse.contribution.hello
+Bundle-Version: 1.0.0
+Automatic-Module-Name: org.eclipse.contribution.hello
+Bundle-RequiredExecutionEnvironment: JavaSE-17
