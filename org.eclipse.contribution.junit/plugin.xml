@@ -10,7 +10,7 @@
 				id="org.eclipse.contribution.junit.runtest.action"
 				label="Run Test"
 				enablesFor="1"
-				class="">
+				class="org.eclipse.contribution.junit.RunTestAction">
 			</action>
 		</objectContribution>
 	</extension>
