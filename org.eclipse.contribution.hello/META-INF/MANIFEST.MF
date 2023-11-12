@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Hello World
-Bundle-SymbolicName: org.eclipse.contribution.hello
+Bundle-SymbolicName: org.eclipse.contribution.hello;singleton:=true
 Bundle-Version: 1.0.0
+Require-Bundle: org.eclipse.ui;bundle-version="3.204.0"
 Automatic-Module-Name: org.eclipse.contribution.hello
 Bundle-RequiredExecutionEnvironment: JavaSE-17
