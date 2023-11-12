@@ -27,8 +27,10 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.RegistryFactory;
+import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.jdt.core.IType;
 
 public class JUnitPlugin extends Plugin {
@@ -109,28 +111,56 @@ public class JUnitPlugin extends Plugin {
 	public void fireTestsStarted(int count) {
 		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
 			ITestRunListener each = (ITestRunListener) all.next();
-			each.testsStarted(count);
+
+			ISafeRunnable runnable = new ISafeRunnable() {
+				public void run() throws Exception {
+					each.testsStarted(count);
+				}
+			};
+			// Platform.run() is deprecated.
+			SafeRunner.run(runnable);
 		}
 	}
 
 	public void fireTestsFinished() {
 		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
 			ITestRunListener each = (ITestRunListener) all.next();
-			each.testsFinished();
+
+			ISafeRunnable runnable = new ISafeRunnable() {
+				public void run() throws Exception {
+					each.testsFinished();
+				}
+			};
+			// Platform.run() is deprecated.
+			SafeRunner.run(runnable);
 		}
 	}
 
 	public void fireTestStarted(String klass, String methodName) {
 		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
 			ITestRunListener each = (ITestRunListener) all.next();
-			each.testStarted(klass, methodName);
+
+			ISafeRunnable runnable = new ISafeRunnable() {
+				public void run() throws Exception {
+					each.testStarted(klass, methodName);
+				}
+			};
+			// Platform.run() is deprecated.
+			SafeRunner.run(runnable);
 		}
 	}
 
 	public void fireTestFailed(String klass, String method, String trace) {
 		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
 			ITestRunListener each = (ITestRunListener) all.next();
-			each.testFailed(klass, method, trace);
+
+			ISafeRunnable runnable = new ISafeRunnable() {
+				public void run() throws Exception {
+					each.testFailed(klass, method, trace);
+				}
+			};
+			// Platform.run() is deprecated.
+			SafeRunner.run(runnable);
 		}
 	}
 }

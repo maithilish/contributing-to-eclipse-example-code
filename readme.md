@@ -1,4 +1,4 @@
-# Chapter 8 - Contributing to Eclipse 
+# Chapter 9 - Contributing to Eclipse 
 
 ## Installation
 
@@ -6,7 +6,7 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching branch with `git checkout chapter-8`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching branch with `git checkout chapter-9`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
@@ -14,5 +14,5 @@ Open org.eclipse.contribution.junit/plugin.xml and in Overview tab, click Launch
 
 In runtime workbench Outline view, select PassTest class, right click to open the context menu and click Run Test. This action launches SocketTestRunner in a new VM which runs the test and sends the test pass/fail message to TestRunner which listens, in runtime workbench, for result and shows result as pass in info dialog. The host workbench console shows the interactions between SocketTestRunner and TestRunner as log output. Next, run test for FailTest which shows test result as fail.
 
-In this chapter, dynamic listener loading is removed from code. Instead, the listener extension-point is declared and used to lazily load the listener.
+This chapter discusses safely notiﬁed extensions using ISafeRunnable and SafeRunner.run(). There is no UI change.
 
