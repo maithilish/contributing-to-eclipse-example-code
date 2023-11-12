@@ -15,4 +15,13 @@
 		</objectContribution>
 	</extension>
 
+	<extension point="org.eclipse.contribution.junit.listeners">
+		<listener
+			class="org.eclipse.contribution.junit.RunTestAction$Listener">
+		</listener>
+	</extension>
+
+	<!-- extension points exposed by this plugin-->
+	<extension-point id="listeners" name="Test Listeners" />
+
 </plugin>

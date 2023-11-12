@@ -38,14 +38,11 @@ public class RunTestAction implements IObjectActionDelegate {
 		IStructuredSelection structured = (IStructuredSelection) selection;
 		IType type = (IType) structured.getFirstElement();
 
-		ITestRunListener listener = new Listener();
-		JUnitPlugin.getPlugin().addTestListener(listener);
 		try {
 			JUnitPlugin.getPlugin().run(type);
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
-		JUnitPlugin.getPlugin().removeTestListener(listener);
 	}
 
 	@Override

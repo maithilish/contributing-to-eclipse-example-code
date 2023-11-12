@@ -23,13 +23,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.jdt.core.IType;
 
 public class JUnitPlugin extends Plugin {
 
+	private static final String listenerId = "org.eclipse.contribution.junit.listeners";
+
 	private static JUnitPlugin instance;
-	private List<ITestRunListener> listeners = new ArrayList<>();
+	private List<ITestRunListener> listeners;
 
 	/**
 	 * Note: IPluginDescriptor is removed in Eclipse 4.12.
@@ -59,6 +66,9 @@ public class JUnitPlugin extends Plugin {
 	}
 
 	public List<ITestRunListener> getListeners() {
+		if (listeners == null) {
+			listeners = computeListeners();
+		}
 		return listeners;
 	}
 
@@ -68,6 +78,32 @@ public class JUnitPlugin extends Plugin {
 
 	public void removeTestListener(ITestRunListener listener) {
 		getListeners().remove(listener);
+	}
+
+	private List<ITestRunListener> computeListeners() {
+		// get extension points and extensions configured into extension points
+		IExtensionRegistry registry = RegistryFactory.getRegistry();
+		IExtensionPoint extensionPoint = registry.getExtensionPoint(listenerId);
+		IExtension[] extensions = extensionPoint.getExtensions();
+
+		// create listeners for each extension configured
+		ArrayList<ITestRunListener> results = new ArrayList<>();
+		for (int i = 0; i < extensions.length; i++) {
+			IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+			for (int j = 0; j < elements.length; j++) {
+				try {
+					// create listener from class attribute in extension listener element
+					IConfigurationElement configurationElement = elements[j];
+					Object listener = configurationElement.createExecutableExtension("class");
+					if (listener instanceof ITestRunListener) {
+						results.add((ITestRunListener) listener);
+					}
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return results;
 	}
 
 	public void fireTestsStarted(int count) {
