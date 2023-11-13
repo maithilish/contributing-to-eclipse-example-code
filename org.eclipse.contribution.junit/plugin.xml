@@ -15,6 +15,15 @@
 		</objectContribution>
 	</extension>
 
+	<extension
+		point="org.eclipse.ui.views">
+		<view
+			id="org.eclipse.contribution.junit.resultView"
+			name="Contributed Result View"
+			class="org.eclipse.contribution.junit.ResultView">
+		</view>
+	</extension>
+
 	<!-- extension points exposed by this plugin-->
 	<extension-point id="listeners" name="Test Listeners" />
 

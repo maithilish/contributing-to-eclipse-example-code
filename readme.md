@@ -1,4 +1,4 @@
-# Chapter 12 - Contributing to Eclipse 
+# Chapter 13 - Contributing to Eclipse 
 
 ## Installation
 
@@ -6,13 +6,12 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching branch with `git checkout chapter-12`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching branch with `git checkout chapter-13`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-The chapter 12 adds new plugin project org.eclipse.contribution.junit.test which contains junit tests to test org.eclipse.contribution.junit plugin developed in the book.
+Run eclipse.contribution.junit.test.ViewColorTest.java and eclipse.contribution.junit.test.ViewTest.java as Junit Plug-in Test. Both should pass.
 
-Right click on org.eclipse.contribution.junit.test.ListenerTest.java and Run As -> JUnit Plug-in Test. The runtime Eclipse creates a new workspace junit-workspace and the ListenerTest.testFailure() test case creates, in junit-workspace, a Project named TestProject, a package pack1 and a test case pack1.FailTest.java. After test run the test asserts whether FailTest is really failed. The tearDown() method deletes the TestProject from junit-workspace after each test and leaves the junit-workspace in a clean state.
+Next, run plugins as Eclipse Application (Run As -> Eclipse Application) and in runtime workbench open 'Contributed Result View' with Window -> Show View -> Other -> Other -> Contributed Result View. Now, in the same workbench open PassTest.java file. In Outline View, select PassTest class and invoke 'Run Test' action from its context menu; The view - Contributed Result View - should turn green. Repeat the same for FailTest.java, and view turns red indicating a test failure.
 
-You can check whether TestProject is created by setting a break point project.dispose() call in ListenerTest.tearDown(). Run the test in debug mode and when debugger stops, open junit-workspace in File Manager and analyze the contents of TestProject folder. Next step over (F6) the break point, and the folder is deleted.
-
+Note, the PassTest and FailTest are in demo project we created in Chapter 5. If you have missed that out, then you can view the setup instructions in readme.md with `git show chapter-5:readme.md`.
