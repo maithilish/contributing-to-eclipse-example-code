@@ -20,7 +20,6 @@ package org.eclipse.contribution.junit;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
@@ -55,23 +54,4 @@ public class RunTestAction implements IObjectActionDelegate {
 		// TODO Auto-generated method stub
 	}
 
-	public static class Listener implements ITestRunListener {
-		private boolean passed;
-
-		public void testsStarted(int testCount) {
-			passed = true;
-		}
-
-		public void testsFinished() {
-			String message = passed ? "Pass" : "Fail";
-			MessageDialog.openInformation(null, "Test Results", message);
-		}
-
-		public void testStarted(String klass, String method) {
-		}
-
-		public void testFailed(String klass, String method, String trace) {
-			passed = false;
-		}
-	}
 }

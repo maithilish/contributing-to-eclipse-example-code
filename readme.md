@@ -1,4 +1,4 @@
-# Chapter 10 - Contributing to Eclipse 
+# Chapter 12 - Contributing to Eclipse 
 
 ## Installation
 
@@ -6,21 +6,13 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching branch with `git checkout chapter-10`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching branch with `git checkout chapter-12`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-Chapter 10 discusses publishing the plugins. We have not included them in the repository as you can easily generate them with IDE wizards.
+The chapter 12 adds new plugin project org.eclipse.contribution.junit.test which contains junit tests to test org.eclipse.contribution.junit plugin developed in the book.
 
-The book explains three ways to publish,
- 
-  - Package the plug-in for use on your machine
-  - Package the plug-in for installation by others (a feature)
-  - Package the feature for downloading and installation (an update site)
-  
-To package for use on your machine, use File -> Export -> Plug-in-Development -> Deployable Plug-ins and Fragments wizard. Note that the runtime element in plugin.xml is depreacated and no longer required to generate the distribution.  
+Right click on org.eclipse.contribution.junit.test.ListenerTest.java and Run As -> JUnit Plug-in Test. The runtime Eclipse creates a new workspace junit-workspace and the ListenerTest.testFailure() test case creates, in junit-workspace, a Project named TestProject, a package pack1 and a test case pack1.FailTest.java. After test run the test asserts whether FailTest is really failed. The tearDown() method deletes the TestProject from junit-workspace after each test and leaves the junit-workspace in a clean state.
 
-To publish as a feature, create a feature project using File -> New -> Others -> Plug-in Development -> Feature Project wizard. Then open feature.xml file and in Overview tab, click Export Deployable Feature button to zip the feature.
-
-To publish as update site, create a Update Site Project using File -> New -> Others -> Plug-in Development -> Update Site Project wizard. Then open the site.xml file, use Add Feature to add the feature and finally, build the update site with Build option. 
+You can check whether TestProject is created by setting a break point project.dispose() call in ListenerTest.tearDown(). Run the test in debug mode and when debugger stops, open junit-workspace in File Manager and analyze the contents of TestProject folder. Next step over (F6) the break point, and the folder is deleted.
 
