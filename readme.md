@@ -1,4 +1,4 @@
-# Chapter 13 - Contributing to Eclipse 
+# Chapter 14 - Contributing to Eclipse 
 
 ## Installation
 
@@ -6,12 +6,11 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching branch with `git checkout chapter-13`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching branch with `git checkout chapter-14`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-Run eclipse.contribution.junit.test.ViewColorTest.java and eclipse.contribution.junit.test.ViewTest.java as Junit Plug-in Test. Both should pass.
+Run plugins as Eclipse Application (Run As -> Eclipse Application) and in runtime workbench open 'Contributed Result View' with Window -> Show View -> Other -> Other -> Contributed Result View.
 
-Next, run plugins as Eclipse Application (Run As -> Eclipse Application) and in runtime workbench open 'Contributed Result View' with Window -> Show View -> Other -> Other -> Contributed Result View. Now, in the same workbench open PassTest.java file. In Outline View, select PassTest class and invoke 'Run Test' action from its context menu; The view - Contributed Result View - should turn green. Repeat the same for FailTest.java, and view turns red indicating a test failure.
+Right click anywhere in the view and in popup menu two menus - Re-run and Contributed Item - are shown. Click on Re-run, and it outputs a log message 'rerun' to host IDE console. Click on Contributed Item opens a information dialog 'The chosen operation is not currently available'.
 
-Note, the PassTest and FailTest are in demo project we created in Chapter 5. If you have missed that out, then you can view the setup instructions in readme.md with `git show chapter-5:readme.md`.

@@ -43,6 +43,7 @@ import org.eclipse.jdt.launching.SocketUtil;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
 public class TestRunner {
+
 	static final String MAIN_CLASS = "org.eclipse.contribution.junit.SocketTestRunner"; //$NON-NLS-1$
 
 	private int port;

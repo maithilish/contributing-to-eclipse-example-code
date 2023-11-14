@@ -27,10 +27,12 @@ import junit.framework.TestCase;
 public class ListenerTest extends TestCase {
 	private TestProject project;
 
+	@Override
 	protected void setUp() throws Exception {
 		project = new TestProject();
 	}
 
+	@Override
 	protected void tearDown() throws Exception {
 		project.dispose();
 	}

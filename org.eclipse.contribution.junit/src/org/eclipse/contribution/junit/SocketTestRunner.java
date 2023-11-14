@@ -119,19 +119,23 @@ public class SocketTestRunner implements TestListener {
 		}
 	}
 
+	@Override
 	public void addError(Test test, Throwable t) {
 		writer.println("failing test " + test); //$NON-NLS-1$
 		t.printStackTrace(writer);
 		writer.println("END TRACE"); //$NON-NLS-1$
 	}
 
+	@Override
 	public void addFailure(Test test, AssertionFailedError t) {
 		addError(test, t);
 	}
 
+	@Override
 	public void endTest(Test test) {
 	}
 
+	@Override
 	public void startTest(Test test) {
 		writer.println("starting test " + test); //$NON-NLS-1$
 	}

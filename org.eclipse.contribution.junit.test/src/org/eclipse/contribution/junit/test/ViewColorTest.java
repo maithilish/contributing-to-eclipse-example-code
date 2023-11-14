@@ -33,10 +33,12 @@ public class ViewColorTest extends TestCase {
 
 	private ResultView view;
 
+	@Override
 	public void setUp() throws PartInitException {
 		view = (ResultView) getPage().showView("org.eclipse.contribution.junit.resultView");
 	}
 
+	@Override
 	public void tearDown() {
 		getPage().hideView(view);
 	}
