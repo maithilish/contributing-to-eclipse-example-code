@@ -37,6 +37,32 @@
 		</view>
 	</extension>
 
+	<extension
+		point="org.eclipse.core.resources.markers"
+		id="failure"
+		name="Test Failure">
+		<super type="org.eclipse.jdt.core.problem" />
+		<persistent value="true" />
+	</extension>
+
+	<!-- marker image is not replaced where super type is
+	org.eclipse.jdt.core.problem -->
+	<extension
+		point="org.eclipse.ui.ide.markerImageProviders">
+		<imageprovider
+			markertype="org.eclipse.contribution.junit.failure"
+			icon="icons/testerr.gif"
+			id="org.contribution.junit">
+		</imageprovider>
+	</extension>
+
+	<extension point="org.eclipse.ui.ide.markerResolution">
+		<markerResolutionGenerator
+			markerType="org.eclipse.contribution.junit.failure"
+			class="org.eclipse.contribution.junit.RerunMarkerResolutionGenerator">
+		</markerResolutionGenerator>
+	</extension>
+
 	<!-- extension points exposed by this plugin-->
 	<extension-point id="listeners" name="Test Listeners" />
 

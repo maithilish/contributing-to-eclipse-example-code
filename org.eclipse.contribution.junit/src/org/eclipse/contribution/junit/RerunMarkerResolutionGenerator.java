@@ -17,14 +17,30 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit;
 
-import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.ui.IMarkerResolution;
+import org.eclipse.ui.IMarkerResolutionGenerator;
 
-public interface ITestRunListener {
-	void testsStarted(IJavaProject project, int testCount);
+public class RerunMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
-	void testsFinished(IJavaProject project);
+	public RerunMarkerResolutionGenerator() {
+	}
 
-	void testStarted(IJavaProject project, String klass, String method);
+	@Override
+	public IMarkerResolution[] getResolutions(final IMarker marker) {
+		final IMarkerResolution resolution = new IMarkerResolution() {
+			@Override
+			public String getLabel() {
+				return "Re-run test";
+			}
 
-	void testFailed(IJavaProject project, String klass, String method, String trace);
+			@Override
+			public void run(final IMarker marker) {
+				// TODO implement re-run
+				System.out.println("rerun test");
+			}
+		};
+		return new IMarkerResolution[] { resolution };
+	}
+
 }

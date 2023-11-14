@@ -17,6 +17,7 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit;
 
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -39,7 +40,7 @@ public class ResultView extends ViewPart {
 	private Action rerunAction;
 
 	@Override
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		listener = new Listener();
 		JUnitPlugin.getPlugin().addTestListener(listener);
 		control = new Label(parent, SWT.NONE);
@@ -61,19 +62,20 @@ public class ResultView extends ViewPart {
 	}
 
 	private void createContextMenu() {
-		MenuManager menuManager = new MenuManager();
+		final MenuManager menuManager = new MenuManager();
 		menuManager.setRemoveAllWhenShown(true);
 		menuManager.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
+			@Override
+			public void menuAboutToShow(final IMenuManager manager) {
 				fillContextMenu(manager);
 			}
 		});
-		Menu menu = menuManager.createContextMenu(control);
+		final Menu menu = menuManager.createContextMenu(control);
 		control.setMenu(menu);
 		getSite().registerContextMenu(menuManager, getSite().getSelectionProvider());
 	}
 
-	private void fillContextMenu(IMenuManager menu) {
+	private void fillContextMenu(final IMenuManager menu) {
 		menu.add(rerunAction);
 		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS + "-end"));
@@ -91,27 +93,28 @@ public class ResultView extends ViewPart {
 		private boolean success;
 
 		@Override
-		public void testsStarted(int testCount) {
+		public void testsStarted(final IJavaProject project, final int testCount) {
 			success = true;
 		}
 
 		@Override
-		public void testsFinished() {
+		public void testsFinished(final IJavaProject project) {
 			if (success) {
-				Display display = control.getDisplay();
-				Color green = display.getSystemColor(SWT.COLOR_GREEN);
+				final Display display = control.getDisplay();
+				final Color green = display.getSystemColor(SWT.COLOR_GREEN);
 				control.setBackground(green);
 			}
 		}
 
 		@Override
-		public void testStarted(String klass, String method) {
+		public void testStarted(final IJavaProject project, final String klass, final String method) {
 			// TODO Auto-generated method stub
 		}
 
 		@Override
-		public void testFailed(String klass, String method, String trace) {
-			Color red = control.getDisplay().getSystemColor(SWT.COLOR_RED);
+		public void testFailed(final IJavaProject project, final String klass, final String method,
+				final String trace) {
+			final Color red = control.getDisplay().getSystemColor(SWT.COLOR_RED);
 			control.setBackground(red);
 			success = false;
 		}
@@ -123,6 +126,7 @@ public class ResultView extends ViewPart {
 			setText("Re-run");
 		}
 
+		@Override
 		public void run() {
 			rerunTest();
 		}

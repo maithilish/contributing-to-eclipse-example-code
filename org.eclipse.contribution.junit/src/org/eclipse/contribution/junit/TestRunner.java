@@ -53,29 +53,29 @@ public class TestRunner {
 	public TestRunner() {
 	}
 
-	public TestRunner(IJavaProject project) {
+	public TestRunner(final IJavaProject project) {
 		this.project = project;
 	}
 
-	public void run(IType type) throws CoreException {
+	public void run(final IType type) throws CoreException {
 		project = type.getJavaProject();
 		run(new IType[] { type });
 	}
 
-	public void run(IType[] classes) throws CoreException {
-		IVMInstall vmInstall = getVMInstall();
+	public void run(final IType[] classes) throws CoreException {
+		final IVMInstall vmInstall = getVMInstall();
 		if (vmInstall == null) {
 			return;
 		}
-		IVMRunner vmRunner = vmInstall.getVMRunner(ILaunchManager.RUN_MODE);
+		final IVMRunner vmRunner = vmInstall.getVMRunner(ILaunchManager.RUN_MODE);
 		if (vmRunner == null) {
 			return;
 		}
 
-		String[] classPath = computeClasspath();
-		VMRunnerConfiguration vmConfig = new VMRunnerConfiguration(MAIN_CLASS, classPath);
+		final String[] classPath = computeClasspath();
+		final VMRunnerConfiguration vmConfig = new VMRunnerConfiguration(MAIN_CLASS, classPath);
 
-		String[] args = new String[classes.length + 1];
+		final String[] args = new String[classes.length + 1];
 		// port = SocketUtil.findUnusedLocalPort("localhost", 10000, 15000);
 		port = SocketUtil.findFreePort();
 		args[0] = Integer.toString(port);
@@ -84,26 +84,27 @@ public class TestRunner {
 		}
 		vmConfig.setProgramArguments(args);
 
-		ILaunch launch = new Launch(null, ILaunchManager.RUN_MODE, null);
+		final ILaunch launch = new Launch(null, ILaunchManager.RUN_MODE, null);
 		vmRunner.run(vmConfig, launch, null);
 		DebugPlugin.getDefault().getLaunchManager().addLaunch(launch);
 		connect();
 	}
 
 	private String[] computeClasspath() throws CoreException {
-		String[] defaultPath = JavaRuntime.computeDefaultRuntimeClassPath(project);
-		String[] classPath = new String[defaultPath.length + 2];
+		final String[] defaultPath = JavaRuntime.computeDefaultRuntimeClassPath(project);
+		final String[] classPath = new String[defaultPath.length + 2];
 		System.arraycopy(defaultPath, 0, classPath, 2, defaultPath.length);
 
-		JUnitPlugin plugin = JUnitPlugin.getPlugin();
-		URL url = plugin.getInstallURL();
+		final JUnitPlugin plugin = JUnitPlugin.getPlugin();
+		final URL url = plugin.getInstallURL();
 		try {
 			// classPath[0] = Platform.asLocalURL(new URL(url, "bin")).getFile();
 			// classPath[1] = Platform.asLocalURL(new URL(url,
 			// "contribjunit.jar")).getFile();
 			classPath[0] = FileLocator.toFileURL(new URL(url, "bin")).getFile();
-		} catch (IOException e) {
-			IStatus status = new Status(IStatus.ERROR, plugin.getPluginName(), IStatus.OK, "Could not determine path", //$NON-NLS-1$
+		} catch (final IOException e) {
+			final IStatus status = new Status(IStatus.ERROR, plugin.getPluginName(), IStatus.OK,
+					"Could not determine path", //$NON-NLS-1$
 					e);
 			throw new CoreException(status);
 		}
@@ -117,7 +118,7 @@ public class TestRunner {
 			ConsoleLogger.log(this, "listen to SocketTestRunner...");
 			server = new ServerSocket(port);
 			try {
-				Socket socket = server.accept();
+				final Socket socket = server.accept();
 				try {
 					readMessage(socket);
 				} finally {
@@ -127,14 +128,14 @@ public class TestRunner {
 				ConsoleLogger.log(this, "close server");
 				server.close();
 			}
-		} catch (IOException e) {
-			IStatus status = new Status(IStatus.ERROR, JUnitPlugin.getPlugin().getPluginName(), IStatus.OK,
+		} catch (final IOException e) {
+			final IStatus status = new Status(IStatus.ERROR, JUnitPlugin.getPlugin().getPluginName(), IStatus.OK,
 					"Could not connect", e); //$NON-NLS-1$
 			throw new CoreException(status);
 		}
 	}
 
-	private void readMessage(Socket socket) throws IOException {
+	private void readMessage(final Socket socket) throws IOException {
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		try {
 			String line = null;
@@ -146,41 +147,41 @@ public class TestRunner {
 		}
 	}
 
-	private void parseMessage(String line) {
-		JUnitPlugin plugin = JUnitPlugin.getPlugin();
+	private void parseMessage(final String line) {
+		final JUnitPlugin plugin = JUnitPlugin.getPlugin();
 		ConsoleLogger.log(this, "  received message: " + line);
 		if (line.startsWith("starting tests ")) {
-			int start = "starting tests ".length(); //$NON-NLS-1$
-			int count = Integer.parseInt(line.substring(start));
-			plugin.fireTestsStarted(count);
+			final int start = "starting tests ".length(); //$NON-NLS-1$
+			final int count = Integer.parseInt(line.substring(start));
+			plugin.fireTestsStarted(project, count);
 		}
 
 		if (line.startsWith("ending tests")) { //$NON-NLS-1$
-			plugin.fireTestsFinished();
+			plugin.fireTestsFinished(project);
 		}
 
 		if (line.startsWith("starting test ")) { //$NON-NLS-1$
-			int start = "starting test ".length(); //$NON-NLS-1$
-			String method = line.substring(start, line.indexOf("(")); //$NON-NLS-1$
-			String klass = line.substring(line.indexOf("(") + 1, line.indexOf(")")); //$NON-NLS-1$ //$NON-NLS-2$
-			plugin.fireTestStarted(klass, method);
+			final int start = "starting test ".length(); //$NON-NLS-1$
+			final String method = line.substring(start, line.indexOf("(")); //$NON-NLS-1$
+			final String klass = line.substring(line.indexOf("(") + 1, line.indexOf(")")); //$NON-NLS-1$ //$NON-NLS-2$
+			plugin.fireTestStarted(project, klass, method);
 		}
 
 		if (line.startsWith("failing test ")) { //$NON-NLS-1$
-			int start = "failing test ".length(); //$NON-NLS-1$
-			String method = line.substring(start, line.indexOf("(")); //$NON-NLS-1$
-			String klass = line.substring(line.indexOf("(") + 1, line.indexOf(")")); //$NON-NLS-1$ //$NON-NLS-2$
-			StringWriter buffer = new StringWriter();
-			PrintWriter writer = new PrintWriter(buffer);
+			final int start = "failing test ".length(); //$NON-NLS-1$
+			final String method = line.substring(start, line.indexOf("(")); //$NON-NLS-1$
+			final String klass = line.substring(line.indexOf("(") + 1, line.indexOf(")")); //$NON-NLS-1$ //$NON-NLS-2$
+			final StringWriter buffer = new StringWriter();
+			final PrintWriter writer = new PrintWriter(buffer);
 			String frame = null;
 			try {
 				while ((frame = reader.readLine()) != null && (!frame.equals("END TRACE"))) //$NON-NLS-1$
 					writer.println(frame);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
-			String trace = buffer.getBuffer().toString();
-			plugin.fireTestFailed(klass, method, trace);
+			final String trace = buffer.getBuffer().toString();
+			plugin.fireTestFailed(project, klass, method, trace);
 		}
 	}
 

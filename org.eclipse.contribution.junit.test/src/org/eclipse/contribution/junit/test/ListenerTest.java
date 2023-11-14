@@ -19,6 +19,7 @@ package org.eclipse.contribution.junit.test;
 
 import org.eclipse.contribution.junit.ITestRunListener;
 import org.eclipse.contribution.junit.JUnitPlugin;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 
@@ -40,12 +41,12 @@ public class ListenerTest extends TestCase {
 	public void testFailure() throws Exception {
 
 		project.addPluginJarToClasspath("org.junit");
-		IPackageFragment pack = project.createPackage("pack1");
-		IType type = project.createType(pack, "FailTest.java",
+		final IPackageFragment pack = project.createPackage("pack1");
+		final IType type = project.createType(pack, "FailTest.java",
 				"public class FailTest extends junit.framework.TestCase {" + "public void testFailure() {fail();}}");
 		project.build();
 
-		Listener listener = new Listener();
+		final Listener listener = new Listener();
 		JUnitPlugin.getPlugin().addTestListener(listener);
 		JUnitPlugin.getPlugin().run(type);
 		assertEquals("testFailure pack1.FailTest", listener.testFailed);
@@ -54,17 +55,22 @@ public class ListenerTest extends TestCase {
 	public static class Listener implements ITestRunListener {
 		String testFailed;
 
-		public void testFailed(String klass, String method, String trace) {
+		@Override
+		public void testFailed(final IJavaProject project, final String klass, final String method,
+				final String trace) {
 			testFailed = method + " " + klass;
 		}
 
-		public void testsStarted(int testCount) {
+		@Override
+		public void testsStarted(final IJavaProject project, final int testCount) {
 		}
 
-		public void testsFinished() {
+		@Override
+		public void testsFinished(final IJavaProject project) {
 		}
 
-		public void testStarted(String klass, String method) {
+		@Override
+		public void testStarted(final IJavaProject project, final String klass, final String method) {
 		}
 	}
 }

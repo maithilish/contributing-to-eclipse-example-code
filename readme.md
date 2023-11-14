@@ -1,4 +1,4 @@
-# Chapter 14 - Contributing to Eclipse 
+# Chapter 16 - Contributing to Eclipse 
 
 ## Installation
 
@@ -6,11 +6,15 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching branch with `git checkout chapter-14`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching branch with `git checkout chapter-16`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-Run plugins as Eclipse Application (Run As -> Eclipse Application) and in runtime workbench open 'Contributed Result View' with Window -> Show View -> Other -> Other -> Contributed Result View.
+The Chapter 16 introduces MarkerCreator which adds error marker to the test method that fails.
 
-Right click anywhere in the view and in popup menu two menus - Re-run and Contributed Item - are shown. Click on Re-run, and it outputs a log message 'rerun' to host IDE console. Click on Contributed Item opens a information dialog 'The chosen operation is not currently available'.
+Run eclipse.contribution.junit.test.MarkerTest.java and test should pass. Instead, you can run all the test created so far by selecting org.eclipse.contribution.junit.test package and Run As -> JUnit Plug-in Test and all tests should pass.
+
+Next, run plugins as Eclipse Application - Run As -> Eclipse Application. In runtime workbench open FailTest.java, and select FailTest class in Outline View, and invoke 'Run Test' action from its context menu; as the test fails, the method testFail() is marked with error marker and a error record is inserted in Problems view. Repeat the same for PassTest.java and error marker from FailTest is deleted. If you run FailTest again, error marker reappears.
+
+Note, the PassTest and FailTest are in demo project we created in Chapter 5. If you have missed that out, then you can view the setup instructions in readme.md with `git show chapter-5:readme.md`.
 

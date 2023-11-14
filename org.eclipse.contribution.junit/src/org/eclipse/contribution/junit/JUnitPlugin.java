@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
 
 public class JUnitPlugin extends Plugin {
@@ -63,10 +64,6 @@ public class JUnitPlugin extends Plugin {
 		return getBundle().getEntry("/");
 	}
 
-	public void run(IType type) throws CoreException {
-		new TestRunner().run(type);
-	}
-
 	public List<ITestRunListener> getListeners() {
 		if (listeners == null) {
 			listeners = computeListeners();
@@ -74,33 +71,33 @@ public class JUnitPlugin extends Plugin {
 		return listeners;
 	}
 
-	public void addTestListener(ITestRunListener listener) {
+	public void addTestListener(final ITestRunListener listener) {
 		getListeners().add(listener);
 	}
 
-	public void removeTestListener(ITestRunListener listener) {
+	public void removeTestListener(final ITestRunListener listener) {
 		getListeners().remove(listener);
 	}
 
 	private List<ITestRunListener> computeListeners() {
 		// get extension points and extensions configured into extension points
-		IExtensionRegistry registry = RegistryFactory.getRegistry();
-		IExtensionPoint extensionPoint = registry.getExtensionPoint(listenerId);
-		IExtension[] extensions = extensionPoint.getExtensions();
+		final IExtensionRegistry registry = RegistryFactory.getRegistry();
+		final IExtensionPoint extensionPoint = registry.getExtensionPoint(listenerId);
+		final IExtension[] extensions = extensionPoint.getExtensions();
 
 		// create listeners for each extension configured
-		ArrayList<ITestRunListener> results = new ArrayList<>();
+		final ArrayList<ITestRunListener> results = new ArrayList<>();
 		for (int i = 0; i < extensions.length; i++) {
-			IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+			final IConfigurationElement[] elements = extensions[i].getConfigurationElements();
 			for (int j = 0; j < elements.length; j++) {
 				try {
 					// create listener from class attribute in extension listener element
-					IConfigurationElement configurationElement = elements[j];
-					Object listener = configurationElement.createExecutableExtension("class");
+					final IConfigurationElement configurationElement = elements[j];
+					final Object listener = configurationElement.createExecutableExtension("class");
 					if (listener instanceof ITestRunListener) {
 						results.add((ITestRunListener) listener);
 					}
-				} catch (CoreException e) {
+				} catch (final CoreException e) {
 					e.printStackTrace();
 				}
 			}
@@ -108,13 +105,14 @@ public class JUnitPlugin extends Plugin {
 		return results;
 	}
 
-	public void fireTestsStarted(int count) {
-		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
-			ITestRunListener each = (ITestRunListener) all.next();
+	public void fireTestsStarted(final IJavaProject project, final int count) {
+		for (final Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
+			final ITestRunListener each = all.next();
 
-			ISafeRunnable runnable = new ISafeRunnable() {
+			final ISafeRunnable runnable = new ISafeRunnable() {
+				@Override
 				public void run() throws Exception {
-					each.testsStarted(count);
+					each.testsStarted(project, count);
 				}
 			};
 			// Platform.run() is deprecated.
@@ -122,13 +120,14 @@ public class JUnitPlugin extends Plugin {
 		}
 	}
 
-	public void fireTestsFinished() {
-		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
-			ITestRunListener each = (ITestRunListener) all.next();
+	public void fireTestsFinished(final IJavaProject project) {
+		for (final Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
+			final ITestRunListener each = all.next();
 
-			ISafeRunnable runnable = new ISafeRunnable() {
+			final ISafeRunnable runnable = new ISafeRunnable() {
+				@Override
 				public void run() throws Exception {
-					each.testsFinished();
+					each.testsFinished(project);
 				}
 			};
 			// Platform.run() is deprecated.
@@ -136,13 +135,14 @@ public class JUnitPlugin extends Plugin {
 		}
 	}
 
-	public void fireTestStarted(String klass, String methodName) {
-		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
-			ITestRunListener each = (ITestRunListener) all.next();
+	public void fireTestStarted(final IJavaProject project, final String klass, final String methodName) {
+		for (final Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
+			final ITestRunListener each = all.next();
 
-			ISafeRunnable runnable = new ISafeRunnable() {
+			final ISafeRunnable runnable = new ISafeRunnable() {
+				@Override
 				public void run() throws Exception {
-					each.testStarted(klass, methodName);
+					each.testStarted(project, klass, methodName);
 				}
 			};
 			// Platform.run() is deprecated.
@@ -150,17 +150,36 @@ public class JUnitPlugin extends Plugin {
 		}
 	}
 
-	public void fireTestFailed(String klass, String method, String trace) {
-		for (Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
-			ITestRunListener each = (ITestRunListener) all.next();
+	public void fireTestFailed(final IJavaProject project, final String klass, final String method,
+			final String trace) {
+		for (final Iterator<ITestRunListener> all = getListeners().iterator(); all.hasNext();) {
+			final ITestRunListener each = all.next();
 
-			ISafeRunnable runnable = new ISafeRunnable() {
+			final ISafeRunnable runnable = new ISafeRunnable() {
+				@Override
 				public void run() throws Exception {
-					each.testFailed(klass, method, trace);
+					each.testFailed(project, klass, method, trace);
 				}
 			};
 			// Platform.run() is deprecated.
 			SafeRunner.run(runnable);
+		}
+	}
+
+	public void run(final IType type) throws CoreException {
+		run(new IType[] { type }, type.getJavaProject());
+	}
+
+	public void run(final IType[] classes, final IJavaProject project) throws CoreException {
+		if (classes.length == 0) {
+			return;
+		}
+		final ITestRunListener listener = new MarkerCreator(project);
+		addTestListener(listener);
+		try {
+			new TestRunner(project).run(classes);
+		} finally {
+			removeTestListener(listener);
 		}
 	}
 }
