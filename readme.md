@@ -1,4 +1,4 @@
-# Chapter 18 - Contributing to Eclipse 
+# Chapter 19 - Contributing to Eclipse 
 
 ## Installation
 
@@ -6,15 +6,15 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching the branch with `git checkout chapter-18`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching the branch with `git checkout chapter-19`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-The Chapter 18 adds AutoTestNature, AutoTestBuilder and a test case BuilderTest.
+The Chapter 19 adds AutoTestPropertyPage.
 
-Run eclipse.contribution.junit.test.BuilderTest.java with Run As -> JUnit Plug-in Test and test should pass. Instead, you can run all the test created so far by selecting org.eclipse.contribution.junit.test package and Run As -> JUnit Plug-in Test and all tests should pass.
+Run plugins with Run As -> Eclipse Application. In runtime workbench open Properties of demo project from its context menu. The Properties page has a new item Auto-Test where you enable/disable auto set property. First disable it and save; now if you select Builders from Properties page, the demo will have only the Java Builder nature. Next, enable Auto-Test and Builders will have two natures - Java Builder and Auto Test Builder natures. 
 
-Next, run plugins with Run As -> Eclipse Application. In runtime workbench open FailTest.java, and the test method testFail() is marked as error. Modify assertTrue(false) statement to assertTrue(true) and demo project auto builds; error marker disappears. Undo the statement back to assertTrue(false) and again, auto build is triggered and marker appears back.
+To see its impact on auto build, disable the Auto Test property. Open the FailTest.java, and the test method testFail() is marked as error. Modify assertTrue(false) statement to assertTrue(true) and demo project doesn't auto build; error marker stays. Undo the changes. Next, enable the Auto Test property, and repeat the FailTest.java modification; error markers appears and disappears based on test result as auto build gets triggered on every save.
 
 Note, the PassTest and FailTest are in demo project that we created in Chapter 5. If you have missed out, then you can view the setup instructions in readme.md with `git show chapter-5:readme.md`.
 

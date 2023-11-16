@@ -81,6 +81,17 @@
 		</builder>
 	</extension>
 
+	<extension point="org.eclipse.ui.propertyPages">
+		<page
+			id="org.eclipse.contribution.junit.autotestproperty"
+			name="Auto-test"
+			objectClass="org.eclipse.core.resources.IProject"
+			adaptable="true"
+			class="org.eclipse.contribution.junit.AutoTestPropertyPage">
+			<filter name="nature" value="org.eclipse.jdt.core.javanature" />
+		</page>
+	</extension>
+
 	<!-- extension points exposed by this plugin-->
 	<extension-point id="listeners" name="Test Listeners" />
 
