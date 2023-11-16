@@ -27,6 +27,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.ISourceRange;
@@ -49,7 +51,9 @@ public class MarkerCreator implements ITestRunListener {
 			project.getProject().deleteMarkers("org.eclipse.contribution.junit.failure", false,
 					IResource.DEPTH_INFINITE);
 		} catch (final CoreException e) {
-			// TODO Log later
+			final JUnitPlugin plugin = JUnitPlugin.getPlugin();
+			final IStatus status = new Status(IStatus.ERROR, plugin.getPluginName(), 0, "Problem deleting markers", e);
+			plugin.getLog().log(status);
 		}
 	}
 

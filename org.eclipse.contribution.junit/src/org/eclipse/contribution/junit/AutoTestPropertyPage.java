@@ -19,6 +19,7 @@ package org.eclipse.contribution.junit;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -59,7 +60,7 @@ public class AutoTestPropertyPage extends PropertyPage {
 				plugin.removeAutoBuildNature(getProject());
 			}
 		} catch (final CoreException e) {
-			// TODO Error dialog
+			ErrorDialog.openError(getShell(), "Error", "Cannot set auto-test property", e.getStatus());
 		}
 		return true;
 	}
