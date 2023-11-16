@@ -1,0 +1,2 @@
+# Reports the found tests when in auto test mode
+org.eclipse.contribution.junit/trace/testfinding=false

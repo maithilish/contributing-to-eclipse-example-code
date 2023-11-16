@@ -25,12 +25,15 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.IJavaModelMarker;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 
 public class AutoTestBuilder extends IncrementalProjectBuilder {
+
+	private static boolean trace = false;
 
 	public AutoTestBuilder() {
 	}
@@ -45,6 +48,11 @@ public class AutoTestBuilder extends IncrementalProjectBuilder {
 		}
 		final IJavaProject javaProject = JavaCore.create(getProject());
 		final IType[] types = new TestSearcher().findAll(javaProject, pm);
+
+		if (AutoTestBuilder.trace) {
+			printTestTypes(types);
+		}
+
 		JUnitPlugin.getPlugin().run(types, javaProject);
 		ConsoleLogger.log(this, "auto build finished");
 		return null;
@@ -60,5 +68,19 @@ public class AutoTestBuilder extends IncrementalProjectBuilder {
 			}
 		}
 		return false;
+	}
+
+	static {
+		final String value = Platform.getDebugOption("org.eclipse.contribution.junit/trace/testfinding");
+		if (value != null && value.equalsIgnoreCase("true")) {
+			AutoTestBuilder.trace = true;
+		}
+	}
+
+	private static void printTestTypes(final IType[] tests) {
+		System.out.println("Auto Test: ");
+		for (int i = 0; i < tests.length; i++) {
+			System.out.println("\t" + tests[i].getFullyQualifiedName());
+		}
 	}
 }
