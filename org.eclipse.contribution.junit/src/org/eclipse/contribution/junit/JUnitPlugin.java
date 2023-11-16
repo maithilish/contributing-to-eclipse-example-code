@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -37,6 +39,8 @@ import org.eclipse.jdt.core.IType;
 public class JUnitPlugin extends Plugin {
 
 	private static final String listenerId = "org.eclipse.contribution.junit.listeners";
+	public static final String AUTO_TEST_NATURE = "org.eclipse.contribution.junit.autoTestNature";
+	public static final String AUTO_TEST_BUILDER = "org.eclipse.contribution.junit.autoTestBuilder";
 
 	private static JUnitPlugin instance;
 	private List<ITestRunListener> listeners;
@@ -180,6 +184,34 @@ public class JUnitPlugin extends Plugin {
 			new TestRunner(project).run(classes);
 		} finally {
 			removeTestListener(listener);
+		}
+	}
+
+	public void addAutoBuildNature(final IProject project) throws CoreException {
+		if (project.hasNature(AUTO_TEST_NATURE)) {
+			return;
+		}
+		final IProjectDescription description = project.getDescription();
+		final String[] ids = description.getNatureIds();
+		final String[] newIds = new String[ids.length + 1];
+		System.arraycopy(ids, 0, newIds, 0, ids.length);
+		newIds[ids.length] = AUTO_TEST_NATURE;
+		description.setNatureIds(newIds);
+		project.setDescription(description, null);
+	}
+
+	public void removeAutoBuildNature(final IProject project) throws CoreException {
+		final IProjectDescription description = project.getDescription();
+		final String[] ids = description.getNatureIds();
+		for (int i = 0; i < ids.length; ++i) {
+			if (ids[i].equals(AUTO_TEST_NATURE)) {
+				final String[] newIds = new String[ids.length - 1];
+				System.arraycopy(ids, 0, newIds, 0, i);
+				System.arraycopy(ids, i + 1, newIds, i, ids.length - i - 1);
+				description.setNatureIds(newIds);
+				project.setDescription(description, null);
+				return;
+			}
 		}
 	}
 }

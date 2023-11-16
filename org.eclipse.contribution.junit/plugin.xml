@@ -63,6 +63,24 @@
 		</markerResolutionGenerator>
 	</extension>
 
+	<extension point="org.eclipse.core.resources.natures"
+		id="autoTestNature"
+		name="Auto Test">
+		<runtime>
+			<run class="org.eclipse.contribution.junit.AutoTestNature" />
+		</runtime>
+		<requires-nature id="org.eclipse.jdt.core.javanature" />
+		<builder id="org.eclipse.contribution.junit.autoTestBuilder" />
+	</extension>
+
+	<extension point="org.eclipse.core.resources.builders"
+		id="autoTestBuilder"
+		name="Auto Test Builder">
+		<builder>
+			<run class="org.eclipse.contribution.junit.AutoTestBuilder" />
+		</builder>
+	</extension>
+
 	<!-- extension points exposed by this plugin-->
 	<extension-point id="listeners" name="Test Listeners" />
 
