@@ -100,9 +100,7 @@ public class ResultView extends ViewPart {
 		@Override
 		public void testsFinished(final IJavaProject project) {
 			if (success) {
-				final Display display = control.getDisplay();
-				final Color green = display.getSystemColor(SWT.COLOR_GREEN);
-				control.setBackground(green);
+				changeColor(success);
 			}
 		}
 
@@ -114,11 +112,30 @@ public class ResultView extends ViewPart {
 		@Override
 		public void testFailed(final IJavaProject project, final String klass, final String method,
 				final String trace) {
-			final Color red = control.getDisplay().getSystemColor(SWT.COLOR_RED);
-			control.setBackground(red);
 			success = false;
+			changeColor(success);
 		}
 
+	}
+
+	private void changeColor(final boolean success) {
+		final Display display = getSite().getShell().getDisplay();
+		display.syncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (control.isDisposed()) {
+					return;
+				}
+				if (success) {
+					final Display display = control.getDisplay();
+					final Color green = display.getSystemColor(SWT.COLOR_GREEN);
+					control.setBackground(green);
+				} else {
+					final Color red = display.getSystemColor(SWT.COLOR_RED);
+					control.setBackground(red);
+				}
+			}
+		});
 	}
 
 	private class RerunTestAction extends Action {

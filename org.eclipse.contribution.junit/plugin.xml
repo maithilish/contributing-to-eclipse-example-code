@@ -35,6 +35,14 @@
 			name="Contributed Result View"
 			class="org.eclipse.contribution.junit.ResultView">
 		</view>
+
+		<view
+			id="org.eclipse.contribution.junit.testReportView"
+			name="Contributed Test Report"
+			icon="icons/testok.gif"
+			class="org.eclipse.contribution.junit.TestReportView">
+		</view>
+
 	</extension>
 
 	<extension
