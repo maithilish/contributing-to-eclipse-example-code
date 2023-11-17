@@ -34,6 +34,7 @@ import org.eclipse.jdt.core.JavaCore;
 public class AutoTestBuilder extends IncrementalProjectBuilder {
 
 	private static boolean trace = false;
+	private static boolean enabled = true;
 
 	public AutoTestBuilder() {
 	}
@@ -41,9 +42,10 @@ public class AutoTestBuilder extends IncrementalProjectBuilder {
 	@Override
 	protected IProject[] build(final int kind, final Map<String, String> args, final IProgressMonitor pm)
 			throws CoreException {
+
 		ConsoleLogger.log(this, "auto build the project");
-		if (hasBuildErrors()) {
-			ConsoleLogger.log(this, "project has errors, not auto build");
+		if (hasBuildErrors() || !AutoTestBuilder.enabled) {
+			ConsoleLogger.log(this, "no auto build, project has errors or auto build not enabled");
 			return null;
 		}
 		final IJavaProject javaProject = JavaCore.create(getProject());
@@ -68,6 +70,10 @@ public class AutoTestBuilder extends IncrementalProjectBuilder {
 			}
 		}
 		return false;
+	}
+
+	public static void setEnabled(final boolean isEnabled) {
+		AutoTestBuilder.enabled = isEnabled;
 	}
 
 	static {
