@@ -100,6 +100,18 @@
 		</page>
 	</extension>
 
+	<extension point="org.eclipse.ui.editors">
+		<editor
+			id="org.eclipse.contribution.junit.TestExclusionEditor"
+			icon="icons/testok.gif"
+			name="Test Exclusions Editor"
+			filenames="test.exclusion"
+			class="org.eclipse.ui.editors.text.TextEditor"
+			default="true"
+			contributorClass="org.eclipse.contribution.junit.TestExclusionEditorActionContributor">
+		</editor>
+	</extension>
+
 	<!-- extension points exposed by this plugin-->
 	<extension-point id="listeners" name="Test Listeners" />
 

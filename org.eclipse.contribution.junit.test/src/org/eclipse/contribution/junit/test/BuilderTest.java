@@ -17,8 +17,11 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit.test;
 
+import java.io.ByteArrayInputStream;
+
 import org.eclipse.contribution.junit.JUnitPlugin;
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -27,6 +30,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 
@@ -84,6 +88,26 @@ public class BuilderTest extends TestCase {
 		ResourcesPlugin.getWorkspace().run(runnable, null);
 		final IMarker[] markers = getFailureMarkers();
 		assertEquals(1, markers.length);
+	}
+
+	public void testAutoTestingFilter() throws Exception {
+		final IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+			@Override
+			public void run(final IProgressMonitor pm) throws CoreException {
+				JUnitPlugin.getPlugin().addAutoBuildNature(testProject.getProject());
+				final IFile file = testProject.getProject().getFile(new Path("test.exclusion"));
+				file.create(new ByteArrayInputStream("pack1.FailTest".getBytes()), true, null);
+				final IPackageFragment pack = testProject.createPackage("pack1");
+				testProject.createType(pack, "FailTest.java", "public class FailTest "
+						+ "extends junit.framework.TestCase {" + "public void testFailure() {fail();}}");
+				testProject.build();
+			}
+		};
+		ResourcesPlugin.getWorkspace().run(runnable, null);
+
+		final IMarker[] markers = getFailureMarkers();
+
+		assertEquals(0, markers.length);
 	}
 
 	private IMarker[] getFailureMarkers() throws CoreException {

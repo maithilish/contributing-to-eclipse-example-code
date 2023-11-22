@@ -1,4 +1,4 @@
-# Chapter 23 - Contributing to Eclipse
+# Chapter 24 - Contributing to Eclipse
 
 ## Installation
 
@@ -6,15 +6,15 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching the branch with `git checkout chapter-23`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching the branch with `git checkout chapter-24`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-The chapter 23 adds a new view TestReport View.
+The chapter 24 adds a new editor to edit test.exclusion file which excludes tests from auto test builder. 
 
-Run eclipse.contribution.junit.test.TestReportTest.java and test should pass. Instead, you can run all the test created so far by selecting org.eclipse.contribution.junit.test package and Run As -> JUnit Plug-in Test and all tests should pass.
+Run eclipse.contribution.junit.test.BuilderTest.java and ExclusionEditorTest.java; both tests should pass. Instead, you can run all the tests created so far by selecting org.eclipse.contribution.junit.test package and Run As -> JUnit Plug-in Test and all tests should pass.
 
-Run the plugin as Eclipse Application - Run As -> Eclipse Application. In runtime workbench, open project demo's Properties page and enable Auto Test. Go to Window -> Show View -> Other -> Other and select 'Contributed Test Report' to open the view. Open FailTest.java, and make some change, undo the change and save to trigger Auto Test build. The 'Contributed Test Report' view displays the test report; the PassTest in default color and FailTest in red. The report also show time taken to run the tests. Next, edit FailTest and modify assertTrue(false) statement as assertTrue(true) and save to trigger auto test build; report should clear the earlier entries and show both tests in default color as both tests pass. Undo the changes to FailTest and save; now FailtTest is shown in red as test fails.
+Run the plugin using Run As -> Eclipse Application. In runtime workbench, open project demo's Properties page and enable Auto Test. Using New -> File option create a file named test.exclusion file in demo project folder: it should be beside src folder at top level of the demo project. Once file is opened a new menu option named 'Exclude Test Case' is displayed in toolbar. It is also added under Edit menu. On click, it opens Test class selection dialog where you can select tests to exclude; select PassTest.java and it is added to test.exclusion file; save the file. It triggers auto builder which reads the exclusions and runs only the FailTest.java; The 'Contributed Test Report' view shows the result of auto build.
 
 Note, the PassTest and FailTest are in demo project we created in Chapter 5. If you have missed that out, then you can view the setup instructions in readme.md with `git show chapter-5:readme.md`.
 

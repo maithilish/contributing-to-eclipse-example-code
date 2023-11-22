@@ -17,14 +17,23 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.IJavaModelMarker;
 import org.eclipse.jdt.core.IJavaProject;
@@ -49,7 +58,8 @@ public class AutoTestBuilder extends IncrementalProjectBuilder {
 			return null;
 		}
 		final IJavaProject javaProject = JavaCore.create(getProject());
-		final IType[] types = new TestSearcher().findAll(javaProject, pm);
+		IType[] types = new TestSearcher().findAll(javaProject, pm);
+		types = exclude(types);
 
 		if (AutoTestBuilder.trace) {
 			printTestTypes(types);
@@ -88,5 +98,39 @@ public class AutoTestBuilder extends IncrementalProjectBuilder {
 		for (int i = 0; i < tests.length; i++) {
 			System.out.println("\t" + tests[i].getFullyQualifiedName());
 		}
+	}
+
+	private IType[] exclude(final IType[] types) {
+		try {
+			final Set<String> exclusions = readExclusions(getProject().getFile(new Path("test.exclusion")));
+			final List<IType> result = new ArrayList<>(types.length);
+			for (int i = 0; i < types.length; i++) {
+				final IType type = types[i];
+				final String typeName = type.getFullyQualifiedName();
+				if (!exclusions.contains(typeName)) {
+					result.add(type);
+				}
+			}
+			return (result.toArray(new IType[result.size()]));
+		} catch (final Exception e) {
+			// fall through
+		}
+		return types;
+	}
+
+	private Set<String> readExclusions(final IFile file) throws IOException, CoreException {
+		final Set<String> result = new HashSet<>();
+		final BufferedReader br = new BufferedReader(new InputStreamReader(file.getContents()));
+		try {
+			String line;
+			while ((line = br.readLine()) != null) {
+				line = line.trim();
+				if (line.length() > 0)
+					result.add(line);
+			}
+		} finally {
+			br.close();
+		}
+		return result;
 	}
 }
