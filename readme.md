@@ -1,4 +1,4 @@
-# Chapter 26 - Contributing to Eclipse
+# Chapter 27 - Contributing to Eclipse
 
 ## Installation
 
@@ -6,13 +6,14 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching the branch with `git checkout chapter-26`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching the branch with `git checkout chapter-27`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-The chapter 26 integrates 'Contributed Test Report' and 'Contributed Result View' views with Java Perspective.
+The chapter 27 enables Help for the plugin and context helps for Test Report view and Run Test action.
 
-So far, these two views were available under 'Other' category and by default, they used to open beside Problems, Console etc., With the modification, they appear under Java category and also as shortcuts in the Show View option. When opened they are stacked below the Problems view. 
+Run the plugin using Run As -> Eclipse Application. In runtime workbench, go to Help -> Help Contents; the help TOC now contains a new item 'Auto Testing'.
 
-Run the plugin using Run As -> Eclipse Application. In runtime workbench, switch to Java perspective and reset the perspective. Go to Window -> Show View, the two contributed views are now shown as shortcuts. They also appear under Other -> Java. Next, open these two views, and they appear below the Problems View.
+Again in the runtime workbench, Go to Window -> Show View and open 'Contributed Test Report'. Clean the project to trigger auto build, and in the Test Report view press Ctrl + F1 which opens the context help for the view. Next, select FailTest in Outline view and open its context menu. Scroll through items and highlight 'Run Test', and click Ctrl + F1 to open its context menu. 
 
+Note, the PassTest and FailTest are in demo project we created in Chapter 5. If you have missed that out, then you can view the setup instructions in readme.md with `git show chapter-5:readme.md`.

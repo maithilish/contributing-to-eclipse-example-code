@@ -10,7 +10,8 @@
 				id="org.eclipse.contribution.junit.runtest.action"
 				label="Run Test"
 				enablesFor="1"
-				class="org.eclipse.contribution.junit.RunTestAction">
+				class="org.eclipse.contribution.junit.RunTestAction"
+				helpContextId="runTestActionContext">
 			</action>
 		</objectContribution>
 	</extension>
@@ -139,6 +140,14 @@
 			<viewShortcut id="org.eclipse.contribution.junit.testReportView" />
 			<viewShortcut id="org.eclipse.contribution.junit.resultView" />
 		</perspectiveExtension>
+	</extension>
+
+	<extension point="org.eclipse.help.toc">
+		<toc file="toc.xml" primary="true" />
+	</extension>
+
+	<extension point="org.eclipse.help.contexts">
+		<contexts file="contexts.xml" plugin="org.eclipse.contribution.junit" />
 	</extension>
 
 	<!-- extension points exposed by this plugin-->

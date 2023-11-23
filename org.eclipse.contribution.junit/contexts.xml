@@ -1,0 +1,9 @@
+<contexts>
+	<context id="autoTestContext">
+		<description>These tests were run during auto-testing.</description>
+		<topic label="Auto-testing" href="help.html" />
+	</context>
+	<context id="runTestActionContext">
+		<description>Runs all tests defined in the selected class.</description>
+	</context>
+</contexts>

@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.ide.IDE.SharedImages;
 import org.eclipse.ui.part.ViewPart;
 
@@ -71,6 +72,12 @@ public class TestReportView extends ViewPart {
 
 		final IActionBars actionBars = getViewSite().getActionBars();
 		actionBars.getToolBarManager().add(new GotoTestAction());
+
+		/*
+		 * WorkbenchHelp.setHelp(), WorkbenchHelp is replaced with IWorkbenchHelpSystem.
+		 */
+		final IWorkbenchHelpSystem workbenchHelpSystem = PlatformUI.getWorkbench().getHelpSystem();
+		workbenchHelpSystem.setHelp(viewer.getControl(), "org.eclipse.contribution.junit.autoTestContext");
 	}
 
 	@Override

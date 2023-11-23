@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="Auto-testing">
+	<!--
+	<toc label="Auto-testing"
+	link_to="../org.eclipse.jdt.doc.user/topics_Concepts.xml#c_javabuilder"> 
+	-->
+	<topic label="Auto-testing" href="help.html" />
+</toc>
