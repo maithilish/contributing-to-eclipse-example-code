@@ -33,14 +33,16 @@
 		<view
 			id="org.eclipse.contribution.junit.resultView"
 			name="Contributed Result View"
-			class="org.eclipse.contribution.junit.ResultView">
+			class="org.eclipse.contribution.junit.ResultView"
+			category="org.eclipse.jdt.ui.java">
 		</view>
 
 		<view
 			id="org.eclipse.contribution.junit.testReportView"
 			name="Contributed Test Report"
 			icon="icons/testok.gif"
-			class="org.eclipse.contribution.junit.TestReportView">
+			class="org.eclipse.contribution.junit.TestReportView"
+			category="org.eclipse.jdt.ui.java">
 		</view>
 
 	</extension>
@@ -110,6 +112,33 @@
 			default="true"
 			contributorClass="org.eclipse.contribution.junit.TestExclusionEditorActionContributor">
 		</editor>
+	</extension>
+
+	<extension point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension
+			targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<view
+				id="org.eclipse.contribution.junit.testReportView"
+				relative="org.eclipse.ui.views.TaskList"
+				visible="false"
+				relationship="stack">
+			</view>
+		</perspectiveExtension>
+		<perspectiveExtension
+			targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<view
+				relative="org.eclipse.ui.views.TaskList"
+				visible="false"
+				relationship="bottom"
+				ratio="0.6"
+				id="org.eclipse.contribution.junit.resultView">
+			</view>
+		</perspectiveExtension>
+		<perspectiveExtension
+			targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<viewShortcut id="org.eclipse.contribution.junit.testReportView" />
+			<viewShortcut id="org.eclipse.contribution.junit.resultView" />
+		</perspectiveExtension>
 	</extension>
 
 	<!-- extension points exposed by this plugin-->

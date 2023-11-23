@@ -1,4 +1,4 @@
-# Chapter 25 - Contributing to Eclipse
+# Chapter 26 - Contributing to Eclipse
 
 ## Installation
 
@@ -6,15 +6,13 @@ For installation of the example code in Eclipse IDE see <a href="https://www.cod
 
 ## Setup
 
-You are here after switching the branch with `git checkout chapter-25`. Next, select all the plugin projects in Project Explorer and refresh with F5.
+You are here after switching the branch with `git checkout chapter-26`. Next, select all the plugin projects in Project Explorer and refresh with F5.
 
 ## Run
 
-The chapter 25 adds logic to observe changes to Java elements and updates ResultView. 
+The chapter 26 integrates 'Contributed Test Report' and 'Contributed Result View' views with Java Perspective.
 
-Run eclipse.contribution.junit.test.ViewColorTest.java; test should pass. Instead, you can run all the tests created so far by selecting org.eclipse.contribution.junit.test package and Run As -> JUnit Plug-in Test and all tests should pass.
+So far, these two views were available under 'Other' category and by default, they used to open beside Problems, Console etc., With the modification, they appear under Java category and also as shortcuts in the Show View option. When opened they are stacked below the Problems view. 
 
-Run the plugin using Run As -> Eclipse Application. In runtime workbench, go to Window -> Show View -> Other -> Other and open 'Contributed Result View'. Open FailTest.java, change assertTrue(false) to assertTrue(true) and save. This triggers auto build and result view's BG color changes to green. Undo the changes and save; color changes to red. Next create new java project named 'foo' and view's changes to default color. Delete the project foo. 
-
-Note, the PassTest and FailTest are in demo project we created in Chapter 5. If you have missed that out, then you can view the setup instructions in readme.md with `git show chapter-5:readme.md`.
+Run the plugin using Run As -> Eclipse Application. In runtime workbench, switch to Java perspective and reset the perspective. Go to Window -> Show View, the two contributed views are now shown as shortcuts. They also appear under Other -> Java. Next, open these two views, and they appear below the Problems View.
 
