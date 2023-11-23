@@ -8,7 +8,7 @@
 			objectClass="org.eclipse.jdt.core.IType">
 			<action
 				id="org.eclipse.contribution.junit.runtest.action"
-				label="Run Test"
+				label="%runTestLabel"
 				enablesFor="1"
 				class="org.eclipse.contribution.junit.RunTestAction"
 				helpContextId="runTestActionContext">
@@ -33,14 +33,14 @@
 		point="org.eclipse.ui.views">
 		<view
 			id="org.eclipse.contribution.junit.resultView"
-			name="Contributed Result View"
+			name="%resultViewName"
 			class="org.eclipse.contribution.junit.ResultView"
 			category="org.eclipse.jdt.ui.java">
 		</view>
 
 		<view
 			id="org.eclipse.contribution.junit.testReportView"
-			name="Contributed Test Report"
+			name="%reportViewName"
 			icon="icons/testok.gif"
 			class="org.eclipse.contribution.junit.TestReportView"
 			category="org.eclipse.jdt.ui.java">
@@ -95,7 +95,7 @@
 	<extension point="org.eclipse.ui.propertyPages">
 		<page
 			id="org.eclipse.contribution.junit.autotestproperty"
-			name="Auto-test"
+			name="%propertyPageName"
 			objectClass="org.eclipse.core.resources.IProject"
 			adaptable="true"
 			class="org.eclipse.contribution.junit.AutoTestPropertyPage">

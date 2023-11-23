@@ -50,11 +50,11 @@ public class TestReportView extends ViewPart {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		TableColumn column = new TableColumn(table, SWT.NONE, 0);
-		column.setText("Test");
+		column.setText(JUnitMessages.TestReportView_0);
 		column.setWidth(300);
 		column.setAlignment(SWT.LEFT);
 		column = new TableColumn(table, SWT.NONE, 1);
-		column.setText("Time(ms)");
+		column.setText(JUnitMessages.TestReportView_1);
 		column.setWidth(100);
 		column.setAlignment(SWT.RIGHT);
 
@@ -77,7 +77,7 @@ public class TestReportView extends ViewPart {
 		 * WorkbenchHelp.setHelp(), WorkbenchHelp is replaced with IWorkbenchHelpSystem.
 		 */
 		final IWorkbenchHelpSystem workbenchHelpSystem = PlatformUI.getWorkbench().getHelpSystem();
-		workbenchHelpSystem.setHelp(viewer.getControl(), "org.eclipse.contribution.junit.autoTestContext");
+		workbenchHelpSystem.setHelp(viewer.getControl(), "org.eclipse.contribution.junit.autoTestContext"); //$NON-NLS-1$
 	}
 
 	@Override
@@ -109,8 +109,8 @@ public class TestReportView extends ViewPart {
 
 	private class GotoTestAction extends Action {
 		private GotoTestAction() {
-			setText("Go to Test");
-			setToolTipText("Go to the Selected Test");
+			setText(JUnitMessages.TestReportView_3);
+			setToolTipText(JUnitMessages.TestReportView_4);
 			final ImageDescriptor descriptor = PlatformUI.getWorkbench().getSharedImages()
 					.getImageDescriptor(SharedImages.IMG_OPEN_MARKER);
 			setImageDescriptor(descriptor);

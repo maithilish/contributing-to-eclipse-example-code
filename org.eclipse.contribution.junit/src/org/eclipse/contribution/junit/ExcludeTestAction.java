@@ -42,9 +42,9 @@ public class ExcludeTestAction extends Action {
 	private ITextEditor editor;
 
 	public ExcludeTestAction() {
-		setText("Exclude Test");
-		setToolTipText("Exclude a Test Case");
-		setImageDescriptor(createImage("icons/test.gif"));
+		setText(JUnitMessages.ExcludeTestAction_0);
+		setToolTipText(JUnitMessages.ExcludeTestAction_1);
+		setImageDescriptor(createImage("icons/test.gif")); //$NON-NLS-1$
 	}
 
 	@Override
@@ -87,8 +87,8 @@ public class ExcludeTestAction extends Action {
 	private IType showDialog(final IType[] types) {
 		final ElementListSelectionDialog dialog = new ElementListSelectionDialog(editor.getSite().getShell(),
 				new JavaElementLabelProvider());
-		dialog.setTitle("Exclude Test");
-		dialog.setMessage("Select Test to exclude:");
+		dialog.setTitle(JUnitMessages.ExcludeTestAction_3);
+		dialog.setMessage(JUnitMessages.ExcludeTestAction_4);
 		dialog.setElements(types);
 		if (dialog.open() == Window.OK) {
 			return (IType) dialog.getFirstResult();
@@ -104,7 +104,7 @@ public class ExcludeTestAction extends Action {
 			return;
 		}
 		try {
-			document.replace(document.getLength(), 0, testName + "\n");
+			document.replace(document.getLength(), 0, testName + "\n"); //$NON-NLS-1$
 		} catch (final BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

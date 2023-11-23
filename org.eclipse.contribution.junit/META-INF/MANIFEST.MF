@@ -18,3 +18,4 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.19.100",
  org.eclipse.text;bundle-version="3.13.100"
 Automatic-Module-Name: org.eclipse.contribution.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-Localization: plugin
