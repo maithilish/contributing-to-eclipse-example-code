@@ -17,7 +17,13 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit;
 
+import org.eclipse.jdt.core.ElementChangedEvent;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IElementChangedListener;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaElementDelta;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -38,11 +44,17 @@ public class ResultView extends ViewPart {
 	private ITestRunListener listener;
 	private Label control;
 	private Action rerunAction;
+	private DirtyListener dirtyListener;
 
 	@Override
 	public void createPartControl(final Composite parent) {
 		listener = new Listener();
 		JUnitPlugin.getPlugin().addTestListener(listener);
+		dirtyListener = new DirtyListener();
+		/*
+		 * PRE_AUTO_BUILD is deprecated, use POST_CHANGE
+		 */
+		JavaCore.addElementChangedListener(dirtyListener, ElementChangedEvent.POST_CHANGE);
 		control = new Label(parent, SWT.NONE);
 		createContextMenu();
 		rerunAction = new RerunTestAction();
@@ -58,7 +70,11 @@ public class ResultView extends ViewPart {
 		if (listener != null) {
 			JUnitPlugin.getPlugin().removeTestListener(listener);
 		}
+		if (dirtyListener != null) {
+			JavaCore.removeElementChangedListener(dirtyListener);
+		}
 		listener = null;
+		dirtyListener = null;
 	}
 
 	private void createContextMenu() {
@@ -152,5 +168,57 @@ public class ResultView extends ViewPart {
 	private void rerunTest() {
 		// TODO not implemented yet
 		System.out.println("rerun");
+	}
+
+	private class DirtyListener implements IElementChangedListener {
+		@Override
+		public void elementChanged(final ElementChangedEvent event) {
+			processDelta(event.getDelta());
+		}
+
+		private boolean processDelta(final IJavaElementDelta delta) {
+			final int kind = delta.getKind();
+			final int type = delta.getElement().getElementType();
+
+			switch (type) {
+			case IJavaElement.JAVA_MODEL:
+			case IJavaElement.JAVA_PROJECT:
+			case IJavaElement.PACKAGE_FRAGMENT_ROOT:
+			case IJavaElement.PACKAGE_FRAGMENT:
+				if (kind == IJavaElementDelta.ADDED || kind == IJavaElementDelta.REMOVED)
+					return testResultDirty();
+				break;
+			case IJavaElement.COMPILATION_UNIT:
+				final ICompilationUnit unit = (ICompilationUnit) delta.getElement();
+				if (unit.isWorkingCopy()) {
+					return true;
+				}
+				return testResultDirty();
+			default:
+				return testResultDirty();
+			}
+
+			final IJavaElementDelta[] affectedChildren = delta.getAffectedChildren();
+			for (int i = 0; i < affectedChildren.length; i++) {
+				if (!processDelta(affectedChildren[i])) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	private boolean testResultDirty() {
+		final Display display = getSite().getShell().getDisplay();
+		display.syncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (!control.isDisposed()) {
+					final Color background = display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
+					control.setBackground(background);
+				}
+			}
+		});
+		return false;
 	}
 }

@@ -62,6 +62,25 @@ public class ViewColorTest extends TestCase {
 		assertEquals(red, view.getControl().getBackground());
 	}
 
+	public void testResultViewColorReset() throws Exception {
+		view.getListener().testsStarted(null, 0);
+		view.getListener().testFailed(null, "class", "method", "trace");
+		view.getListener().testsFinished(null);
+		final Display display = view.getControl().getDisplay();
+		final Color red = display.getSystemColor(SWT.COLOR_RED);
+		assertEquals(red, view.getControl().getBackground());
+
+		final Color background = display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
+		changeWorkspace();
+		assertEquals(background, view.getControl().getBackground());
+	}
+
+	public void changeWorkspace() throws Exception {
+		final TestProject project = new TestProject();
+		project.createPackage("pack1");
+		project.dispose();
+	}
+
 	private IWorkbenchPage getPage() {
 		final IWorkbench workbench = PlatformUI.getWorkbench();
 		final IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
