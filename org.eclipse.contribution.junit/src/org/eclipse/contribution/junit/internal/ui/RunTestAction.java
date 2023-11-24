@@ -15,8 +15,9 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.ui;
 
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jface.action.IAction;

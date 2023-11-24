@@ -15,10 +15,13 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.ui;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.contribution.junit.internal.core.AutoTestBuilder;
+import org.eclipse.contribution.junit.internal.core.ConsoleLogger;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;

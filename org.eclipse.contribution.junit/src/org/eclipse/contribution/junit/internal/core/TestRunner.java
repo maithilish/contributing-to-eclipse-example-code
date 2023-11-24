@@ -15,7 +15,7 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +44,7 @@ import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
 public class TestRunner {
 
-	static final String MAIN_CLASS = "org.eclipse.contribution.junit.SocketTestRunner"; //$NON-NLS-1$
+	static final String MAIN_CLASS = "org.eclipse.contribution.junit.internal.core.SocketTestRunner"; //$NON-NLS-1$
 
 	private int port;
 	private IJavaProject project;

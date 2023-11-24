@@ -18,7 +18,7 @@
 package org.eclipse.contribution.junit.test;
 
 import org.eclipse.contribution.junit.ITestRunListener;
-import org.eclipse.contribution.junit.JUnitPlugin;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;

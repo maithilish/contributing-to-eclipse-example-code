@@ -15,13 +15,14 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.core;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.contribution.junit.ITestRunListener;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;

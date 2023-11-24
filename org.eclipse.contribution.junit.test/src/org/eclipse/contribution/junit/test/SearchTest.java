@@ -17,7 +17,7 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit.test;
 
-import org.eclipse.contribution.junit.TestSearcher;
+import org.eclipse.contribution.junit.internal.core.TestSearcher;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 

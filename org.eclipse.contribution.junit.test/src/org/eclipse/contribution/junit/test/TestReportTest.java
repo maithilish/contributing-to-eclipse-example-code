@@ -17,8 +17,8 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit.test;
 
-import org.eclipse.contribution.junit.JUnitPlugin;
-import org.eclipse.contribution.junit.TestReportView;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
+import org.eclipse.contribution.junit.internal.ui.TestReportView;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;

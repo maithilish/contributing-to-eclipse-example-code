@@ -17,7 +17,7 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit.test;
 
-import org.eclipse.contribution.junit.ResultView;
+import org.eclipse.contribution.junit.internal.ui.ResultView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;

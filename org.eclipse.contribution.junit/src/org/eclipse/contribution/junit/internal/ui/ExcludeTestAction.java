@@ -15,11 +15,13 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.ui;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
+import org.eclipse.contribution.junit.internal.core.TestSearcher;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;

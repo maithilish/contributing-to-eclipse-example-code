@@ -8,7 +8,7 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.core;
 
 /**
  * Helper to output message to console.

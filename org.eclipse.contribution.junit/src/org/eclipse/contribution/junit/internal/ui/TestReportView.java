@@ -15,7 +15,7 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.ui;
 
 import java.util.ArrayList;
 

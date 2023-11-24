@@ -17,8 +17,8 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit.test;
 
-import org.eclipse.contribution.junit.JUnitPlugin;
-import org.eclipse.contribution.junit.ResultView;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
+import org.eclipse.contribution.junit.internal.ui.ResultView;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;

@@ -17,8 +17,8 @@
  *******************************************************************************/
 package org.eclipse.contribution.junit.test;
 
-import org.eclipse.contribution.junit.JUnitPlugin;
-import org.eclipse.contribution.junit.RerunMarkerResolutionGenerator;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
+import org.eclipse.contribution.junit.internal.ui.RerunMarkerResolutionGenerator;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;

@@ -3,8 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: JUnit Plug-in
 Bundle-SymbolicName: org.eclipse.contribution.junit;singleton:=true
 Bundle-Version: 1.0.0
-Export-Package: org.eclipse.contribution.junit
-Bundle-Activator: org.eclipse.contribution.junit.JUnitPlugin
+Export-Package: org.eclipse.contribution.junit,
+ org.eclipse.contribution.junit.internal.core,
+ org.eclipse.contribution.junit.internal.ui
+Bundle-Activator: org.eclipse.contribution.junit.internal.core.JUnitPlugin
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.19.100",
  org.eclipse.ui;bundle-version="3.204.0",
  org.eclipse.jdt.core;bundle-version="3.35.0",

@@ -15,7 +15,7 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -10,7 +10,7 @@
 				id="org.eclipse.contribution.junit.runtest.action"
 				label="%runTestLabel"
 				enablesFor="1"
-				class="org.eclipse.contribution.junit.RunTestAction"
+				class="org.eclipse.contribution.junit.internal.ui.RunTestAction"
 				helpContextId="runTestActionContext">
 			</action>
 		</objectContribution>
@@ -34,7 +34,7 @@
 		<view
 			id="org.eclipse.contribution.junit.resultView"
 			name="%resultViewName"
-			class="org.eclipse.contribution.junit.ResultView"
+			class="org.eclipse.contribution.junit.internal.ui.ResultView"
 			category="org.eclipse.jdt.ui.java">
 		</view>
 
@@ -42,10 +42,9 @@
 			id="org.eclipse.contribution.junit.testReportView"
 			name="%reportViewName"
 			icon="icons/testok.gif"
-			class="org.eclipse.contribution.junit.TestReportView"
+			class="org.eclipse.contribution.junit.internal.ui.TestReportView"
 			category="org.eclipse.jdt.ui.java">
 		</view>
-
 	</extension>
 
 	<extension
@@ -70,7 +69,7 @@
 	<extension point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
 			markerType="org.eclipse.contribution.junit.failure"
-			class="org.eclipse.contribution.junit.RerunMarkerResolutionGenerator">
+			class="org.eclipse.contribution.junit.internal.ui.RerunMarkerResolutionGenerator">
 		</markerResolutionGenerator>
 	</extension>
 
@@ -78,7 +77,8 @@
 		id="autoTestNature"
 		name="Auto Test">
 		<runtime>
-			<run class="org.eclipse.contribution.junit.AutoTestNature" />
+			<run
+				class="org.eclipse.contribution.junit.internal.core.AutoTestNature" />
 		</runtime>
 		<requires-nature id="org.eclipse.jdt.core.javanature" />
 		<builder id="org.eclipse.contribution.junit.autoTestBuilder" />
@@ -88,7 +88,8 @@
 		id="autoTestBuilder"
 		name="Auto Test Builder">
 		<builder>
-			<run class="org.eclipse.contribution.junit.AutoTestBuilder" />
+			<run
+				class="org.eclipse.contribution.junit.internal.core.AutoTestBuilder" />
 		</builder>
 	</extension>
 
@@ -98,7 +99,7 @@
 			name="%propertyPageName"
 			objectClass="org.eclipse.core.resources.IProject"
 			adaptable="true"
-			class="org.eclipse.contribution.junit.AutoTestPropertyPage">
+			class="org.eclipse.contribution.junit.internal.ui.AutoTestPropertyPage">
 			<filter name="nature" value="org.eclipse.jdt.core.javanature" />
 		</page>
 	</extension>
@@ -111,7 +112,7 @@
 			filenames="test.exclusion"
 			class="org.eclipse.ui.editors.text.TextEditor"
 			default="true"
-			contributorClass="org.eclipse.contribution.junit.TestExclusionEditorActionContributor">
+			contributorClass="org.eclipse.contribution.junit.internal.ui.TestExclusionEditorActionContributor">
 		</editor>
 	</extension>
 
@@ -151,6 +152,7 @@
 	</extension>
 
 	<!-- extension points exposed by this plugin-->
-	<extension-point id="listeners" name="Test Listeners" />
+	<extension-point id="listeners" name="Test Listeners"
+		schema="schema/listeners.exsd" />
 
 </plugin>

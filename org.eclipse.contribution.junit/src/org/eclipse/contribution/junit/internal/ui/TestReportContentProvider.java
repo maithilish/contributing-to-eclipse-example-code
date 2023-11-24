@@ -15,10 +15,12 @@
  *     Maithilish Bhat (maithilish@gmail.com)
  *
  *******************************************************************************/
-package org.eclipse.contribution.junit;
+package org.eclipse.contribution.junit.internal.ui;
 
 import java.util.List;
 
+import org.eclipse.contribution.junit.ITestRunListener;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;

@@ -19,7 +19,7 @@ package org.eclipse.contribution.junit.test;
 
 import java.io.ByteArrayInputStream;
 
-import org.eclipse.contribution.junit.ExcludeTestAction;
+import org.eclipse.contribution.junit.internal.ui.ExcludeTestAction;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;

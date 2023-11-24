@@ -19,7 +19,7 @@ package org.eclipse.contribution.junit.test;
 
 import java.io.IOException;
 
-import org.eclipse.contribution.junit.JUnitPlugin;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;

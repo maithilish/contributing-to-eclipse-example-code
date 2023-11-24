@@ -19,7 +19,7 @@ package org.eclipse.contribution.junit.test;
 
 import java.io.ByteArrayInputStream;
 
-import org.eclipse.contribution.junit.JUnitPlugin;
+import org.eclipse.contribution.junit.internal.core.JUnitPlugin;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
